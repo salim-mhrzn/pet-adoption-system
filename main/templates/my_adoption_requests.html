@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+
+    <h3 class="text-center mb-4 text-success">My Adoption Requests 🐾</h3>
+
+    {% if adoption_requests %}
+        <div class="row">
+            {% for req in adoption_requests %}
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ req.pet.name }}</h5>
+                        <p><strong>Full Name:</strong> {{ req.full_name }}</p>
+                        <p><strong>Email:</strong> {{ req.email }}</p>
+                        <p><strong>Phone:</strong> {{ req.phone }}</p>
+                        <p><strong>Address:</strong> {{ req.address }}, {{ req.city }}</p>
+                        <p><strong>Age:</strong> {{ req.age }}</p>
+                        <p><strong>Occupation:</strong> {{ req.occupation }}</p>
+                        <p><strong>Status:</strong>
+                            {% if req.status == 'Pending' %}
+                                <span class="badge bg-warning">Pending</span>
+                            {% elif req.status == 'Approved' %}
+                                <span class="badge bg-success">Approved</span>
+                            {% else %}
+                                <span class="badge bg-danger">Rejected</span>
+                            {% endif %}
+                        </p>
+
+                        {% if req.photo_id %}
+                            <p><strong>Photo ID:</strong></p>
+                            <img src="{{ req.photo_id.url }}" class="img-fluid mb-2" style="max-height:200px;">
+                        {% endif %}
+                        {% if req.legal_doc %}
+                            <p><strong>Legal Document:</strong></p>
+                            <img src="{{ req.legal_doc.url }}" class="img-fluid mb-2" style="max-height:200px;">
+                        {% endif %}
+                        {% if req.selfie_with_pet %}
+                            <p><strong>Selfie with Pet:</strong></p>
+                            <img src="{{ req.selfie_with_pet.url }}" class="img-fluid mb-2" style="max-height:200px;">
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-muted mt-5">You have not submitted any adoption requests yet.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

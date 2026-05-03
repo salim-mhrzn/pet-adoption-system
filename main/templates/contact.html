@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .contact-section {
+        background: linear-gradient(to right, #f8f9fa, #e9f7ef);
+        padding: 60px 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .contact-title {
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    .contact-card {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+    }
+
+    .info-card {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+        height: 100%;
+    }
+
+    .info-card h5 {
+        color: #28a745;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .info-item {
+        margin-bottom: 20px;
+    }
+
+    .info-item strong {
+        color: #2c3e50;
+    }
+
+    .btn-custom {
+        background-color: #28a745;
+        color: white;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-custom:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+</style>
+
+<div class="container mt-5 mb-5">
+
+    <div class="contact-section">
+
+        <!-- Title -->
+        <div class="text-center mb-5">
+            <h2 class="contact-title">Contact Us</h2>
+            <p class="lead">We’re here to help. Get in touch with Pet Connect.</p>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Contact Form -->
+            <div class="col-md-7">
+                <div class="contact-card">
+                    <h4 class="mb-4">Send Us a Message</h4>
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" name="email" class="form-control" placeholder="Enter your email address" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Your Message</label>
+                            <textarea name="message" rows="5" class="form-control" placeholder="Write your message here..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-custom w-100">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Contact Information (Single Box) -->
+            <div class="col-md-5">
+                <div class="info-card">
+
+                    <h5>📞 Contact Information</h5>
+
+                    <div class="info-item">
+                        <strong>📍 Address:</strong>
+                        <p>
+                            Pet Connect <br>
+                            Khokana,Lacchi<br>
+                            lalitpur,Nepal
+                        </p>
+                    </div>
+
+                    <div class="info-item">
+                        <strong>📞 Phone:</strong>
+                        <p>977 9849136405</p>
+                    </div>
+
+                    <div class="info-item">
+                        <strong>📧 Email:</strong>
+                        <p>support@petconnect.com</p>
+                    </div>
+
+                    <hr>
+
+                    <p class="text-muted mb-0">
+                        Our team typically responds within 24 hours.
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

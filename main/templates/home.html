@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .page-title {
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .search-text {
+        font-size: 18px;
+        opacity: 0.9;
+    }
+
+    .pet-card {
+        border-radius: 15px;
+        overflow: hidden;
+        transition: 0.3s ease;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .pet-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    .pet-img {
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .card-body-custom {
+        background: #efe9e9;
+        padding: 20px;
+    }
+
+    .pet-name {
+        font-weight: 600;
+        color: #020a12;
+    }
+
+    .pet-info {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .btn-adopt {
+        background-color: #28a745;
+        border: none;
+        font-weight: 600;
+        transition: 0.3s;
+        border-radius: 30px;
+    }
+
+    .btn-adopt:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+
+    .btn-track {
+        background-color: #007bff;
+        font-weight: 600;
+        border-radius: 30px;
+        padding: 10px 25px;
+        transition: 0.3s;
+    }
+
+    .btn-track:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    .empty-message {
+        font-size: 20px;
+        font-weight: 500;
+    }
+    /* THE FIX: Add this to the bottom of your style block */
+    .row { display: flex !important; flex-direction: row !important; direction: ltr !important; justify-content: flex-start !important; }
+</style>
+
+<div class="container mt-5 mb-5">
+
+    <!-- Page Title -->
+    <h3 class="text-center mb-4 text-white page-title">
+        Available Pets 🐾
+    </h3>
+
+    <!-- Track My Adoption Requests Button -->
+    <div class="text-center my-4">
+        <a href="{% url 'my_adoption_requests' %}" class="btn btn-track btn-lg">
+            Track My Adoption Requests
+        </a>
+    </div>
+
+    <!-- Search Query Message -->
+    {% if query %}
+    <p class="text-center text-white search-text mb-4">
+        Showing results for "<strong>{{ query }}</strong>"
+    </p>
+    {% endif %}
+
+    <!-- Pets Grid -->
+    <div class="row">
+    {% for pet in pets %}
+        <div class="col-md-4 mb-4">
+            <div class="card pet-card border-0 position-relative">
+                <div class="position-absolute top-0 start-0 m-2 d-flex flex-column gap-1" style="z-index: 10;">
+                    {% if pet.get_priority_score >= 100 %}
+                        <span class="badge bg-danger shadow-sm">🔥 High Priority</span>
+                    {% elif pet.get_priority_score >= 50 %}
+                        <span class="badge bg-warning text-dark shadow-sm">⭐ Recommended</span>
+                    {% endif %}
+                </div>
+
+                {% if pet.image %}
+                    <img src="{{ pet.image.url }}" class="card-img-top pet-img">
+                {% else %}
+                    <img src="https://via.placeholder.com/300x250" class="card-img-top pet-img">
+                {% endif %}
+
+                <div class="card-body card-body-custom">
+                    <h5 class="pet-name">{{ pet.name }}</h5>
+                <!--   <p class="text-muted small">Debug Score: {{ pet.get_priority_score }}</p> -->
+                    
+                    <p class="pet-info"><strong>Breed:</strong> {{ pet.breed }}</p>
+                    <p class="pet-info"><strong>Age:</strong> {{ pet.age }} years</p>
+                    <p class="pet-info"><strong>Gender:</strong> {% if pet.gender == 'M' %} Male {% else %} Female {% endif %}</p>
+                    
+                    <p class="text-muted mt-2">
+                        <strong>About:</strong> {{ pet.description|truncatewords:12 }}
+                    </p>
+
+                    <a href="{% url 'adopt_pet' pet.id %}" class="btn btn-adopt w-100 mt-3">Adopt Now</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12 text-center text-white empty-message">No pets found. 🐾</div>
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pet Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .fw-bold { font-weight: bold; }
+       
+        body {
+            background: url("{% static 'img/pic1.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background: rgba(0, 0, 0, 0.55);
+        }
+
+        .navbar-brand, .navbar a {
+            color: #fff !important;
+            font-weight: 500;
+        }
+
+        .navbar a:hover {
+            color: #ffc107 !important;
+        }
+
+        /* Dropdown alignment */
+        .dropdown-menu-end { right: 0; left: auto; }
+        .navbar .dropdown-menu a.dropdown-item { color: black !important; }
+        .navbar .dropdown-menu a.dropdown-item:hover {
+            background-color: #f5f3ee !important;
+            color: black !important;
+        }
+
+        /* CRITICAL FIX: Forces the Pet Grid to start from the Left */
+        .force-left-layout {
+            direction: ltr !important;
+            text-align: left !important;
+            display: block !important;
+        }
+
+/* Optional: hover effect */
+.navbar .dropdown-menu a.dropdown-item:hover {
+    background-color: #f5f3ee !important; /* gold highlight */
+    color: black !important;
+}
+    </style>
+</head>
+<body>
+    
+    {% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand" href="{% url 'home' %}">PET CONNECT</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navBar">
+            <!-- Left: About/Contact -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact Us</a></li>
+            </ul>
+
+            <!-- Center: Search + Categories (home only) -->
+            {% if request.resolver_match.url_name == 'home' %}
+            <div class="d-flex mx-auto">
+                <form class="d-flex me-2" method="get">
+                    <input class="form-control me-2" type="search" name="q" placeholder="Search by name or breed" value="{{ request.GET.q }}">
+                    <button class="btn btn-outline-warning" type="submit">Search</button>
+                </form>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categories
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                        <li><a class="dropdown-item" href="{% url 'home' %}?category=Dog">Dog</a></li>
+                        <li><a class="dropdown-item" href="{% url 'home' %}?category=Cat">Cat</a></li>
+                        <li><a class="dropdown-item" href="{% url 'home' %}">All</a></li>
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Right: Notification + User -->
+            {% if request.user.is_authenticated %}
+            <div class="d-flex align-items-center ms-auto">
+        <div class="dropdown me-3">
+        <a class="btn btn-secondary position-relative" href="#" role="button" id="notifDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            🔔
+            {% if unread_count > 0 %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{ unread_count }}
+                </span>
+            {% endif %}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notifDropdown" style="min-width: 280px; max-height: 400px; overflow-y: auto;">
+            
+            <li class="px-3 py-2 d-flex justify-content-between align-items-center bg-light">
+                <span class="small fw-bold">Notifications</span>
+                {% if notifications %}
+                    <a href="{% url 'clear_all_notifications' %}" class="btn btn-danger btn-sm py-0 px-2" style="font-size: 0.7rem; border-radius: 20px;">
+                    Clear All
+                   </a>
+                {% endif %}
+            </li>
+            <li><hr class="dropdown-divider m-0"></li>
+
+            {% for notif in notifications %}
+                <li>
+                    <a class="dropdown-item {% if not notif.is_read %}fw-bold{% endif %} py-2 border-bottom" 
+                       href="{% url 'view_notification' notif.id %}">
+                       <span style="white-space: normal; display: block; line-height: 1.4;">
+                           {{ notif.message }}
+                       </span>
+                       <small class="text-muted" style="font-size: 0.7rem;">{{ notif.created_at|date:"M d, H:i" }}</small>
+                    </a>
+                </li>
+            {% empty %}
+                <li class="dropdown-item text-center py-3 text-muted">No notifications</li>
+            {% endfor %}
+            </ul>
+    </div>
+                <!-- User -->
+                <span class="text-white">
+                    {{ request.user.username }} |
+                    <a href="{% url 'logout' %}" class="text-warning">Logout</a>
+                </span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+
+<!-- MAIN CONTENT -->
+<div class="container mt-4" force-left-layout">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-white pt-5 pb-3 mt-5">
+    <div class="container">
+        <div class="row">
+
+            <!-- About / Mission -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold">Our Mission 🐾</h5>
+                <p>
+                    Pet Connect is committed to rescuing and finding loving homes for abandoned and stray animals. 
+                    We believe every pet deserves a caring family.
+                </p>
+            </div>
+
+
+            <!-- Quick Links -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'home' %}" class="text-white text-decoration-none">Home</a></li>
+                    <li><a href="{% url 'about' %}" class="text-white text-decoration-none">About Us</a></li>
+                    <li><a href="{% url 'contact' %}" class="text-white text-decoration-none">Contact Us</a></li>
+                    <li><a href="{% url 'home' %}" class="text-white text-decoration-none">Available Pets</a></li>
+                </ul>
+            </div>
+
+            <!-- Social Media -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold">Connect With Us</h5>
+                <a href="https://facebook.com/petconnect" target="_blank" class="text-white me-3 fs-5">
+                    <i class="bi bi-facebook"></i> Pet Connect
+                </a>
+                <br>
+                <a href="mailto:support@petconnect.com" class="text-white fs-5 mt-2 d-block">
+                    <i class="bi bi-envelope-fill"></i> support@petconnect.com
+                </a>
+            </div>
+        </div>
+
+        <hr class="bg-light">
+        <p class="text-center mb-0">&copy; 2026 Pet Connect. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap Icons CDN (for social media icons) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<!-- FOOTER STYLES -->
+<style>
+footer {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+footer h5 {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+footer p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+footer .social-icons a {
+    font-size: 22px;
+    color: #ffffff;
+    transition: color 0.3s;
+}
+footer .social-icons a:hover {
+    color: #28a745; /* Green hover for adoption feel */
+}
+.map-responsive iframe {
+    border-radius: 8px;
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block title %}Adopt {{ pet.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white text-center">
+                    <h4>Adoption Form for {{ pet.name }}</h4>
+                    <p>Please fill out all required fields and upload verification documents.</p>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Personal Information -->
+                        <h5 class="mb-3">Personal Information</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>Full Name</label>
+                                <input type="text" name="full_name" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>Phone Number</label>
+                                <input type="text" name="phone" class="form-control"
+                                       pattern="(98|97)[0-9]{8}" maxlength="10" minlength="10" required
+                                       placeholder="98XXXXXXXX or 97XXXXXXXX">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label>Age</label>
+                                <input type="number" name="age" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Address</label>
+                            <textarea name="address" class="form-control" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label>City</label>
+                            <input type="text" name="city" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Occupation</label>
+                            <input type="text" name="occupation" class="form-control" required>
+                        </div>
+
+                        <!-- Housing Information -->
+                        <h5 class="mt-4 mb-3">Housing Information</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>Type of Housing</label>
+                                <input type="text" name="housing_type" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label>Do you own or rent?</label>
+                                <input type="text" name="own_or_rent" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Landlord Permission (if renting)</label>
+                            <input type="text" name="landlord_permission" class="form-control">
+                        </div>
+
+                        <!-- Pet Experience -->
+                        <h5 class="mt-4 mb-3">Pet Experience</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>Previous Pets</label>
+                                <input type="text" name="previous_pet" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label>Current Pets</label>
+                                <input type="text" name="current_pet" class="form-control">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Experience with Pets</label>
+                            <input type="text" name="experience" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Reason for Adoption</label>
+                            <textarea name="reason" class="form-control" required></textarea>
+                        </div>
+
+                        <!-- Verification Documents -->
+                        <h5 class="mt-4 mb-3">Verification Documents</h5>
+                        <div class="mb-3">
+                            <label>Photo ID (Required)</label>
+                            <input type="file" name="photo_id" class="form-control" accept=".jpg,.jpeg,.png,.pdf" required>
+                        </div>
+                        <div class="mb-3">
+                         <label for="legal_doc" class="form-label">Legal Document (Required)</label>
+                         <input type="file" name="legal_doc" id="legal_doc" class="form-control" required>
+                    </div>
+
+                        <button type="submit" class="btn btn-success w-100 mt-3">Submit Adoption Request</button>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'home' %}">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

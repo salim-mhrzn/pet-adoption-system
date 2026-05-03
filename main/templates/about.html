@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .about-section {
+        background: linear-gradient(to right, #f8f9fa, #e9f7ef);
+        padding: 60px 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .about-title {
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    .highlight {
+        color: #28a745;
+        font-weight: 600;
+    }
+
+    .icon-box {
+        background-color: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: 0.3s ease;
+        height: 100%;
+    }
+
+    .icon-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+    }
+
+    .stats-box {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+    }
+
+    .stats-number {
+        font-size: 32px;
+        font-weight: 700;
+        color: #28a745;
+    }
+</style>
+
+<div class="container mt-5 mb-5">
+
+    <div class="about-section">
+
+        <!-- Title -->
+        <div class="text-center mb-5">
+            <h2 class="about-title">About Pet Connect</h2>
+            <p class="lead">Connecting loving families with pets who need a forever home.</p>
+        </div>
+
+        <!-- Mission & Vision -->
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <h4>🐾 Our Mission</h4>
+                <p>
+                    At <span class="highlight">Pet Connect</span>, our mission is to simplify and modernize 
+                    the pet adoption process. We provide a trusted and secure platform where adopters 
+                    can easily explore, connect, and adopt pets in need of loving homes.
+                </p>
+            </div>
+
+            <div class="col-md-6">
+                <h4>🌎 Our Vision</h4>
+                <p>
+                    Our vision is to reduce the number of homeless pets by leveraging technology 
+                    to make adoption transparent, accessible, and efficient for everyone.
+                </p>
+            </div>
+        </div>
+        <!-- Adoption Rules & Regulations Section -->
+<div class="container mt-5 mb-5">
+
+    <div class="about-section">
+
+        <div class="text-center mb-5">
+            <h2 class="about-title text-warning">Adoption Rules & Regulations 🐶🐱</h2>
+            <p class="lead">Please read and follow these rules to ensure a smooth and safe adoption process.</p>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Rule 1 -->
+            <div class="col-md-6">
+                <div class="icon-box">
+                    <h5>1. Age Requirement</h5>
+                    <p>Only individuals above <span class="highlight">18 years</span> can adopt pets and must provide valid ID.</p>
+                </div>
+            </div>
+
+            <!-- Rule 2 -->
+            <div class="col-md-6">
+                <div class="icon-box">
+                    <h5>2. Approval Required</h5>
+                    <p>Adoption requests are subject to review and approval by Pet Connect staff.</p>
+                </div>
+            </div>
+
+            <!-- Rule 3 -->
+            <div class="col-md-6">
+                <div class="icon-box">
+                    <h5>3. Home Visits</h5>
+                    <p>Home visits may be conducted for certain pets to ensure proper care and environment.</p>
+                </div>
+            </div>
+
+            <!-- Rule 4 -->
+            <div class="col-md-6">
+                <div class="icon-box">
+                    <h5>4. Proper Care</h5>
+                    <p>Adopters must provide shelter, food to the pet and Pets must not be sold, traded, or abandoned after adoption.</p>
+                </div>
+            </div>
+
+            <!-- Rule 5 -->
+            <div class="col-md-6">
+                <div class="icon-box">
+                    <h5>5. Vaccinations</h5>
+                    <p>All pets are provided with basic vaccinations and deworming; adopters should follow up with a veterinarian.</p>
+                </div>
+            </div>
+
+            <!-- Rule 6 -->
+            <div class="col-md-12">
+                <div class="icon-box">
+                    <h5>6. Agreement</h5>
+                    <p>By adopting, you agree to abide by all rules. Pet Connect reserves the right to follow up on the pet's welfare.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+        <!-- Features Section -->
+        <div class="row g-4 mb-5">
+
+            <div class="col-md-4">
+                <div class="icon-box text-center">
+                    <h5>🔎 Easy Pet Search</h5>
+                    <p>
+                        Browse and filter pets by breed, category, and availability 
+                        using our simple search system.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="icon-box text-center">
+                    <h5>📩 Adoption Requests</h5>
+                    <p>
+                        Submit and track adoption requests with real-time updates 
+                        and status notifications.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="icon-box text-center">
+                    <h5>🔒 Secure & Reliable</h5>
+                    <p>
+                        We ensure secure communication and structured management 
+                        between adopters and administrators.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Statistics Section -->
+        <div class="row text-center">
+
+            <div class="col-md-4">
+                <div class="stats-box">
+                    <div class="stats-number">50+</div>
+                    <p>Pets Listed</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="stats-box">
+                    <div class="stats-number">30+</div>
+                    <p>Successful Adoptions</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="stats-box">
+                    <div class="stats-number">100%</div>
+                    <p>User Satisfaction</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Closing -->
+        <div class="text-center mt-5">
+            <h5>Thank you for being part of our mission 💛</h5>
+            <p class="text-muted">
+                Together, we can give every pet a loving and caring home.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
